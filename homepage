@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KostSpace | Cari Kost Modern & Eksklusif di Jakarta</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a',
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 30px -2px rgba(0, 0, 0, 0.03)',
+                        'float': '0 12px 40px -8px rgba(37, 99, 235, 0.12)',
+                        'premium': '0 20px 50px -12px rgba(15, 23, 42, 0.08)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Desain Scrollbar Minimalis */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f8fafc;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        
+        /* Sembunyikan scrollbar pada navigasi horizontal */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        /* Pola Peta Abstrak untuk Simulasi Peta */
+        .mock-map-bg {
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(#cbd5e1 1.2px, transparent 1.2px),
+                radial-gradient(#cbd5e1 1.2px, transparent 1.2px);
+            background-size: 32px 32px;
+            background-position: 0 0, 16px 16px;
+        }
+
+        /* Animasi Transisi Halaman */
+        .view-transition {
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+    </style>
+</head>
+<body class="bg-white text-slate-800 antialiased selection:bg-brand-500 selection:text-white">
+
+    <!-- Toast Notification (Custom alert) -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] transform translate-y-24 opacity-0 transition-all duration-500 pointer-events-none">
+        <div class="bg-slate-900 text-white px-6 py-3.5 rounded-2xl shadow-premium font-bold text-sm flex items-center gap-3">
+            <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
+            <span id="toast-text">Berhasil memperbarui data</span>
+        </div>
+    </div>
+
+    <!-- Header / Navbar -->
+    <header id="navbar" class="fixed top-0 inset-x-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex items-center gap-2.5 cursor-pointer" onclick="goBackToHome()">
+                    <div class="w-10 h-10 bg-brand-600 rounded-xl flex items-center justify-center shadow-lg shadow-brand-500/30">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="white" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                        </svg>
+                    </div>
+                    <span class="text-xl font-extrabold tracking-tight text-slate-900">KostSpace<span class="text-brand-600">.</span></span>
+                </div>
+
+                <!-- Navigasi Utama -->
+                <nav class="hidden md:flex items-center gap-8">
+                    <a href="javascript:void(0)" onclick="goBackToHomeAndScroll('#stays-section')" class="text-sm font-bold text-slate-500 hover:text-brand-600 transition-colors">Cari Kost</a>
+                    <a href="javascript:void(0)" onclick="goBackToHomeAndScroll('#popular-areas')" class="text-sm font-semibold text-slate-500 hover:text-slate-900 transition-colors">Area Populer</a>
+                    <a href="javascript:void(0)" onclick="goBackToHomeAndScroll('#promo-banner')" class="text-sm font-semibold text-slate-500 hover:text-slate-900 transition-colors">Promo Spesial</a>
+                    <a href="javascript:void(0)" onclick="goBackToHomeAndScroll('#join-mitra')" class="text-sm font-semibold text-slate-500 hover:text-slate-900 transition-colors">Gabung Mitra</a>
+                </nav>
+
+                <!-- Tombol CTA -->
+                <div class="flex items-center gap-4">
+                    <button class="hidden sm:block text-sm font-bold text-slate-600 hover:text-brand-600 transition-colors px-2">Masuk</button>
+                    <button class="text-sm font-bold bg-slate-900 text-white hover:bg-slate-800 active:scale-95 transition-all px-5 py-2.5 rounded-xl shadow-sm">Daftar</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- VIEW 1: BERANDA / HOMEPAGE -->
+    <div id="homepage-view" class="view-transition opacity-100 transform translate-y-0">
+        <main class="pt-20">
+            <!-- Hero Section -->
+            <section class="relative bg-white pt-16 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+                <!-- Elemen Dekoratif Gradasi -->
+                <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-brand-50 blur-3xl opacity-70 pointer-events-none"></div>
+                <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-blue-50 blur-3xl opacity-70 pointer-events-none"></div>
+
+                <div class="max-w-4xl mx-auto text-center relative z-10">
+                    <div class="inline-flex items-center gap-2 bg-white border border-slate-200/80 shadow-soft text-slate-600 text-xs font-bold px-4 py-2 rounded-full mb-8">
+                        <span class="relative flex h-2 w-2">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                        </span>
+                        Tersedia 15.000+ Kamar Kost Terverifikasi di Jakarta
+                    </div>
+                    
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.1] mb-6">
+                        Temukan kamar kost <br class="hidden sm:block">
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-indigo-600">modern & nyaman</span> di Jakarta.
+                    </h1>
+                    
+                    <p class="text-base sm:text-lg text-slate-500 mb-12 max-w-2xl mx-auto font-medium">
+                        Kost impian yang strategis dengan fasilitas lengkap, harga transparan, dan proses pemesanan instan. Mulai hidup modern Anda sekarang.
+                    </p>
+
+                    <!-- Filter Pencarian Interaktif (Smart Search Bar) -->
+                    <div class="bg-white p-2.5 sm:p-3 rounded-3xl shadow-float border border-slate-100 flex flex-col md:flex-row items-center gap-2 max-w-4xl mx-auto relative z-20">
+                        
+                        <!-- Input Lokasi / Area -->
+                        <div class="flex-1 w-full hover:bg-slate-50 rounded-2xl transition-colors px-5 py-3 cursor-text text-left border-b md:border-b-0 md:border-r border-slate-100 group relative">
+                            <label class="block text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mb-1 group-focus-within:text-brand-600 transition-colors">Pilih Wilayah</label>
+                            <select id="locationFilter" class="w-full bg-transparent text-sm font-bold text-slate-900 focus:outline-none appearance-none cursor-pointer">
+                                <option value="all">Semua Jakarta</option>
+                                <option value="Jakarta Selatan">Jakarta Selatan</option>
+                                <option value="Jakarta Pusat">Jakarta Pusat</option>
+                                <option value="Jakarta Barat">Jakarta Barat</option>
+                                <option value="Jakarta Utara">Jakarta Utara</option>
+                            </select>
+                        </div>
+
+                        <!-- Filter Budget -->
+                        <div class="flex-1 w-full hover:bg-slate-50 rounded-2xl transition-colors px-5 py-3 cursor-pointer text-left border-b md:border-b-0 md:border-r border-slate-100 group">
+                            <label class="block text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mb-1 group-hover:text-brand-600 transition-colors">Anggaran Bulanan</label>
+                            <select id="budgetFilter" class="w-full bg-transparent text-sm font-bold text-slate-900 focus:outline-none appearance-none cursor-pointer">
+                                <option value="all">Bebas Budget</option>
+                                <option value="under-2">Di bawah Rp 2.000.000</option>
+                                <option value="2-4">Rp 2.000.000 - Rp 4.000.000</option>
+                                <option value="above-4">Di atas Rp 4.000.000</option>
+                            </select>
+                        </div>
+
+                        <!-- Tipe Kost -->
+                        <div class="flex-1 w-full hover:bg-slate-50 rounded-2xl transition-colors px-5 py-3 cursor-pointer text-left group">
+                            <label class="block text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mb-1 group-hover:text-brand-600 transition-colors">Tipe Kost</label>
+                            <select id="typeFilter" class="w-full bg-transparent text-sm font-bold text-slate-900 focus:outline-none appearance-none cursor-pointer">
+                                <option value="all">Semua Tipe</option>
+                                <option value="Putra">Khusus Putra</option>
+                                <option value="Putri">Khusus Putri</option>
+                                <option value="Campur">Campur</option>
+                            </select>
+                        </div>
+
+                        <!-- Tombol Cari -->
+                        <button onclick="applyFilters()" class="w-full md:w-auto bg-brand-600 hover:bg-brand-700 active:scale-[0.98] text-white px-8 py-4 rounded-2xl shadow-lg shadow-brand-500/30 transition-all flex items-center justify-center gap-2 h-full min-h-[56px]">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.603 10.602z" />
+                            </svg>
+                            <span class="font-bold">Cari Kost</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Kategori Cepat (Horizontal Slider) -->
+            <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
+                <div class="flex items-center gap-3 overflow-x-auto hide-scrollbar pb-4 pt-1">
+                    <button onclick="filterCategory('WiFi Cepat')" class="category-chip flex-shrink-0 bg-white border border-slate-200 px-4 py-2.5 rounded-full text-xs font-bold text-slate-600 hover:border-brand-500 hover:text-brand-600 transition-all shadow-sm flex items-center gap-2">
+                        ⚡ WiFi Cepat
+                    </button>
+                    <button onclick="filterCategory('AC')" class="category-chip flex-shrink-0 bg-white border border-slate-200 px-4 py-2.5 rounded-full text-xs font-bold text-slate-600 hover:border-brand-500 hover:text-brand-600 transition-all shadow-sm flex items-center gap-2">
+                        ❄️ Kamar Ber-AC
+                    </button>
+                    <button onclick="filterCategory('Kamar Mandi Dalam')" class="category-chip flex-shrink-0 bg-white border border-slate-200 px-4 py-2.5 rounded-full text-xs font-bold text-slate-600 hover:border-brand-500 hover:text-brand-600 transition-all shadow-sm flex items-center gap-2">
+                        🚿 KM Dalam
+                    </button>
+                    <button onclick="filterCategory('Parkir Mobil')" class="category-chip flex-shrink-0 bg-white border border-slate-200 px-4 py-2.5 rounded-full text-xs font-bold text-slate-600 hover:border-brand-500 hover:text-brand-600 transition-all shadow-sm flex items-center gap-2">
+                        🚗 Parkir Mobil
+                    </button>
+                    <button onclick="filterCategory('Dekat MRT')" class="category-chip flex-shrink-0 bg-white border border-slate-200 px-4 py-2.5 rounded-full text-xs font-bold text-slate-600 hover:border-brand-500 hover:text-brand-600 transition-all shadow-sm flex items-center gap-2">
+                        🚇 Dekat MRT / KRL
+                    </button>
+                </div>
+            </section>
+
+            <!-- Daftar Kost & Belah Layar Peta -->
+            <section id="stays-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 border-t border-slate-100">
+                <div class="flex items-end justify-between mb-8">
+                    <div>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Rekomendasi KostSpace</h2>
+                        <p class="text-slate-500 text-sm mt-1 font-medium">Kost berkualitas tinggi, terverifikasi langsung oleh tim lapangan kami.</p>
+                    </div>
+                    
+                    <!-- Toggle Grid / Peta (Khusus Desain Desktop) -->
+                    <div class="hidden md:flex items-center bg-slate-100 p-1 rounded-xl shadow-inner">
+                        <button class="bg-white text-slate-900 font-bold text-xs px-4 py-2 rounded-lg shadow-sm flex items-center gap-2">
+                            <svg class="w-4 h-4 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg> Grid
+                        </button>
+                        <button class="text-slate-500 hover:text-slate-900 font-bold text-xs px-4 py-2 rounded-lg flex items-center gap-2 transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg> Peta
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tata Letak Fleksibel Belah Layar (Listings 60% : Map Mockup 40%) -->
+                <div class="flex flex-col lg:flex-row gap-8">
+                    
+                    <!-- Bagian Grid Card Kost (Kiri) -->
+                    <div class="w-full lg:w-[60%] grid grid-cols-1 sm:grid-cols-2 gap-6" id="listingsContainer">
+                        <!-- Data Kost akan di-render secara dinamis menggunakan JS -->
+                    </div>
+
+                    <!-- Bagian Peta (Kanan) -->
+                    <div class="hidden lg:block lg:w-[40%]">
+                        <div class="sticky top-28 w-full h-[calc(100vh-140px)] min-h-[580px] rounded-3xl border border-slate-200 overflow-hidden relative shadow-soft mock-map-bg">
+                            <div class="absolute top-5 left-5 right-5 flex justify-between items-start pointer-events-none z-10">
+                                <div class="bg-white/95 backdrop-blur pointer-events-auto px-4 py-2.5 rounded-xl shadow-soft border border-slate-100 flex items-center gap-2.5">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse ring-4 ring-emerald-500/20"></span>
+                                    <span class="text-xs font-bold text-slate-800" id="map-counter-info">Menampilkan semua area</span>
+                                </div>
+                            </div>
+
+                            <!-- Pin Lokasi Simulasi Beranda -->
+                            <div class="absolute top-[30%] left-[45%] z-10"><button class="bg-brand-600 text-white font-extrabold text-xs px-3.5 py-2 rounded-full shadow-lg border-2 border-white hover:scale-110 transition-all">Rp 3.5jt</button></div>
+                            <div class="absolute top-[52%] left-[28%] z-10"><button class="bg-brand-600 text-white font-extrabold text-xs px-3.5 py-2 rounded-full shadow-lg border-2 border-white hover:scale-110 transition-all">Rp 2.1jt</button></div>
+                            <div class="absolute top-[45%] left-[75%] z-10"><button class="bg-brand-600 text-white font-extrabold text-xs px-3.5 py-2 rounded-full shadow-lg border-2 border-white hover:scale-110 transition-all">Rp 4.5jt</button></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Area Populer Section -->
+            <section id="popular-areas" class="bg-slate-50 py-20 border-t border-b border-slate-100">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="mb-12">
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Kawasan Kost Terpopuler</h2>
+                        <p class="text-slate-500 text-sm mt-1 font-medium">Daerah strategis dekat dengan perkantoran utama, pusat perbelanjaan, dan stasiun MRT.</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                        <!-- Area 1 (Jakarta Selatan) -->
+                        <div onclick="navigateToArea('Jakarta Selatan')" class="relative h-56 sm:h-64 rounded-3xl overflow-hidden cursor-pointer group shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1">
+                            <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=600" alt="Jakarta Selatan" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/35 to-transparent flex flex-col justify-end p-5">
+                                <span class="text-white font-extrabold text-lg sm:text-xl leading-tight">Jakarta Selatan</span>
+                                <span class="text-slate-300 text-xs mt-1 font-medium flex items-center gap-1.5">Mulai halaman &rarr;</span>
+                            </div>
+                        </div>
+                        <!-- Area 2 (Jakarta Pusat) -->
+                        <div onclick="navigateToArea('Jakarta Pusat')" class="relative h-56 sm:h-64 rounded-3xl overflow-hidden cursor-pointer group shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1">
+                            <img src="https://images.unsplash.com/photo-1582407947304-fd86f028f716?auto=format&fit=crop&q=80&w=600" alt="Jakarta Pusat" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/35 to-transparent flex flex-col justify-end p-5">
+                                <span class="text-white font-extrabold text-lg sm:text-xl leading-tight">Jakarta Pusat</span>
+                                <span class="text-slate-300 text-xs mt-1 font-medium flex items-center gap-1.5">Mulai halaman &rarr;</span>
+                            </div>
+                        </div>
+                        <!-- Area 3 (Jakarta Barat) -->
+                        <div onclick="navigateToArea('Jakarta Barat')" class="relative h-56 sm:h-64 rounded-3xl overflow-hidden cursor-pointer group shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1">
+                            <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&q=80&w=600" alt="Jakarta Barat" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/35 to-transparent flex flex-col justify-end p-5">
+                                <span class="text-white font-extrabold text-lg sm:text-xl leading-tight">Jakarta Barat</span>
+                                <span class="text-slate-300 text-xs mt-1 font-medium flex items-center gap-1.5">Mulai halaman &rarr;</span>
+                            </div>
+                        </div>
+                        <!-- Area 4 (Jakarta Utara) -->
+                        <div onclick="navigateToArea('Jakarta Utara')" class="relative h-56 sm:h-64 rounded-3xl overflow-hidden cursor-pointer group shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1">
+                            <img src="https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&q=80&w=600" alt="Jakarta Utara" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/35 to-transparent flex flex-col justify-end p-5">
+                                <span class="text-white font-extrabold text-lg sm:text-xl leading-tight">Jakarta Utara</span>
+                                <span class="text-slate-300 text-xs mt-1 font-medium flex items-center gap-1.5">Mulai halaman &rarr;</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Promo Banner Section -->
+            <section id="promo-banner" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+                <div class="bg-gradient-to-r from-brand-600 to-indigo-700 rounded-[2.5rem] p-8 sm:p-12 lg:p-16 text-white relative overflow-hidden shadow-premium">
+                    <div class="absolute top-0 right-0 -mr-16 -mt-16 w-80 h-80 rounded-full bg-white/5 blur-3xl"></div>
+                    
+                    <div class="max-w-2xl relative z-10 space-y-6">
+                        <span class="inline-flex bg-white/20 text-white font-bold text-xs px-4 py-1.5 rounded-full uppercase tracking-wider backdrop-blur-sm">Promo Terbatas</span>
+                        <h2 class="text-3xl sm:text-5xl font-black tracking-tight leading-tight">Diskon Hingga 15% Untuk Booking Pertama Anda!</h2>
+                        <p class="text-white/80 text-sm sm:text-base font-medium">
+                            Dapatkan potongan harga sewa eksklusif di KostSpace untuk semua jenis kamar premium berlabel "Promo" selama bulan ini. Gunakan kode promo saat konfirmasi pembayaran.
+                        </p>
+                        <div class="flex flex-wrap gap-4 pt-4">
+                            <button onclick="copyPromo()" class="bg-white text-slate-900 hover:bg-slate-50 font-extrabold text-sm px-8 py-3.5 rounded-2xl active:scale-[0.98] transition-all shadow-md">Salin Kode: KOSTSPACE15</button>
+                            <a href="#stays-section" class="border border-white/40 hover:bg-white/10 hover:border-white font-extrabold text-sm px-8 py-3.5 rounded-2xl transition-all flex items-center gap-2">Cari Sekarang &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Gabung Mitra Section -->
+            <section id="join-mitra" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 pb-20 border-t border-slate-100">
+                <div class="flex flex-col md:flex-row items-center gap-12">
+                    <div class="flex-1 space-y-6">
+                        <span class="text-xs font-bold uppercase tracking-widest text-brand-600">Mitra Pemilik Kost</span>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-none">Punya Properti Kost di Jakarta?</h2>
+                        <p class="text-slate-500 font-medium">
+                            Maksimalkan okupansi kamar kost Anda dengan bergabung di ekosistem digital KostSpace. Kami membantu proses pemasaran, pengelolaan calon penghuni, hingga sistem pembayaran instan.
+                        </p>
+                        <ul class="space-y-3.5 text-sm font-semibold text-slate-600">
+                            <li class="flex items-center gap-2.5"><span class="w-5 h-5 bg-brand-50 rounded-full flex items-center justify-center text-brand-600 text-xs font-extrabold">&checkmark;</span> Foto Properti Profesional Gratis</li>
+                            <li class="flex items-center gap-2.5"><span class="w-5 h-5 bg-brand-50 rounded-full flex items-center justify-center text-brand-600 text-xs font-extrabold">&checkmark;</span> Dasbor Pengelolaan Penghuni</li>
+                            <li class="flex items-center gap-2.5"><span class="w-5 h-5 bg-brand-50 rounded-full flex items-center justify-center text-brand-600 text-xs font-extrabold">&checkmark;</span> Pembayaran Instan Tanpa Repot</li>
+                        </ul>
+                        <div class="pt-4">
+                            <a href="https://wa.me/628123456789?text=Halo%20KostSpace,%20saya%20tertarik%20bergabung%20sebagai%20mitra%20kost." target="_blank" class="inline-flex bg-slate-900 hover:bg-slate-800 text-white font-bold px-8 py-4 rounded-2xl active:scale-95 transition-all shadow-md">Hubungi Tim Kemitraan</a>
+                        </div>
+                    </div>
+                    <div class="flex-1 relative">
+                        <div class="w-full h-80 sm:h-96 rounded-[2.5rem] overflow-hidden shadow-premium border border-slate-100 relative">
+                            <img src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- VIEW 2: HALAMAN KATALOG AREA KHUSUS (SPA VIEW) -->
+    <div id="area-view" class="view-transition hidden opacity-0 transform translate-y-8 min-h-screen bg-slate-50/30 pt-24 pb-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Tombol Kembali Modern -->
+            <button onclick="goBackToHome()" class="inline-flex items-center gap-2 text-slate-500 hover:text-brand-600 font-bold text-sm mb-6 transition-all group bg-white border border-slate-200 px-4 py-2 rounded-2xl shadow-soft">
+                <svg class="w-4 h-4 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path></svg>
+                Kembali ke Beranda
+            </button>
+
+            <!-- Header Halaman Area -->
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+                <div>
+                    <div class="inline-flex items-center gap-1.5 bg-brand-50 text-brand-700 text-xs font-bold px-3 py-1 rounded-full mb-3 border border-brand-100">
+                        <span class="w-1.5 h-1.5 bg-brand-600 rounded-full animate-ping"></span>
+                        Area Populer DKI Jakarta
+                    </div>
+                    <h1 id="area-view-title" class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">Katalog Kost Jakarta</h1>
+                    <p class="text-slate-500 text-sm mt-1 font-medium">Temukan hunian eksklusif terbaik dengan verifikasi menyeluruh di kawasan ini.</p>
+                </div>
+            </div>
+
+            <!-- Tata Letak Fleksibel Area Page (Listings 60% : Map Mockup 40%) -->
+            <div class="flex flex-col lg:flex-row gap-8">
+                <!-- Grid Card Kost (Kiri) -->
+                <div class="w-full lg:w-[60%] grid grid-cols-1 sm:grid-cols-2 gap-6" id="areaListingsContainer">
+                    <!-- Dinamis terisi melalui JavaScript -->
+                </div>
+
+                <!-- Bagian Simulasi Peta Wilayah Spesifik (Kanan) -->
+                <div class="hidden lg:block lg:w-[40%]">
+                    <div class="sticky top-28 w-full h-[calc(100vh-160px)] min-h-[540px] rounded-3xl border border-slate-200 overflow-hidden relative shadow-soft mock-map-bg">
+                        <div class="absolute top-5 left-5 right-5 flex justify-between items-start pointer-events-none z-10">
+                            <div class="bg-white/95 backdrop-blur pointer-events-auto px-4 py-2.5 rounded-xl shadow-soft border border-slate-100 flex items-center gap-2.5">
+                                <span class="w-2.5 h-2.5 rounded-full bg-brand-500 animate-pulse ring-4 ring-brand-500/20"></span>
+                                <span class="text-xs font-bold text-slate-800" id="area-map-counter-info">Menampilkan peta wilayah</span>
+                            </div>
+                        </div>
+
+                        <!-- Pin Lokasi Sesuai Area yang Dipilih -->
+                        <div id="area-pins-container">
+                            <!-- Pin dinamis terisi oleh JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIEW 3: HALAMAN FORM BOOKING VIA WHATSAPP (NEW SPA VIEW) -->
+    <div id="booking-view" class="view-transition hidden opacity-0 transform translate-y-8 min-h-screen bg-slate-50/30 pt-24 pb-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6">
+            <!-- Tombol Kembali -->
+            <button onclick="goBackToPreviousView()" class="inline-flex items-center gap-2 text-slate-500 hover:text-brand-600 font-bold text-sm mb-6 transition-all group bg-white border border-slate-200 px-4 py-2 rounded-2xl shadow-soft">
+                <svg class="w-4 h-4 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path></svg>
+                Kembali
+            </button>
+
+            <!-- Grid Layout Form & Ringkasan Kost -->
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-8 items-start">
+                
+                <!-- Sisi Kiri: Form Input Data Booking (3 Kolom) -->
+                <div class="md:col-span-3 bg-white p-6 sm:p-8 rounded-3xl border border-slate-150 shadow-soft space-y-6">
+                    <div>
+                        <h2 class="text-xl font-extrabold text-slate-900 tracking-tight">Formulir Booking</h2>
+                        <p class="text-slate-400 text-xs font-semibold mt-1">Lengkapi data diri Anda untuk diteruskan langsung ke WhatsApp Admin.</p>
+                    </div>
+
+                    <form id="bookingForm" class="space-y-5" onsubmit="sendBookingWhatsapp(event)">
+                        <!-- Nama Lengkap -->
+                        <div>
+                            <label class="block text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mb-2">Nama Lengkap Anda *</label>
+                            <input type="text" id="bookingName" required placeholder="Masukkan nama lengkap Anda" class="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all text-sm font-semibold placeholder:text-slate-300">
+                        </div>
+
+                        <!-- Alamat Email -->
+                        <div>
+                            <label class="block text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mb-2">Alamat Email *</label>
+                            <input type="email" id="bookingEmail" required placeholder="nama@email.com" class="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all text-sm font-semibold placeholder:text-slate-300">
+                        </div>
+
+                        <!-- Pesan Singkat -->
+                        <div>
+                            <label class="block text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mb-2">Pesan Tambahan (Opsional)</label>
+                            <textarea id="bookingMessage" rows="4" placeholder="Contoh: Saya ingin menanyakan ketersediaan parkir mobil atau waktu survey minggu depan..." class="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all text-sm font-semibold placeholder:text-slate-300"></textarea>
+                        </div>
+
+                        <!-- Tombol Submit Kirim ke Whatsapp -->
+                        <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-sm py-4 rounded-2xl active:scale-[0.98] transition-all shadow-md flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.665.989 3.3.15 5.347.151 5.494 0 9.961-4.471 9.964-9.97 0-2.664-1.04-5.163-2.929-7.051-1.888-1.889-4.39-2.929-7.042-2.93-5.499 0-9.966 4.473-9.968 9.97-.001 2.014.524 3.984 1.521 5.728l-.99 3.614 3.699-.971z"/></svg>
+                            Kirim Booking via WhatsApp
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Sisi Kanan: Summary Informasi Properti Kost Pilihan (2 Kolom) -->
+                <div class="md:col-span-2 space-y-4">
+                    <div class="bg-white border border-slate-150 rounded-3xl p-5 shadow-soft space-y-5">
+                        <h3 class="text-xs font-extrabold uppercase tracking-widest text-slate-400">Kost Pilihan Anda</h3>
+                        
+                        <!-- Ringkasan Kost Card -->
+                        <div class="space-y-4">
+                            <div class="relative h-40 w-full overflow-hidden rounded-2xl bg-slate-100 border border-slate-100">
+                                <img id="bookingKostImg" src="" class="w-full h-full object-cover">
+                            </div>
+                            <div class="space-y-1">
+                                <span id="bookingKostType" class="text-[9px] font-extrabold bg-brand-50 text-brand-700 px-2.5 py-1 rounded-md border border-brand-100 uppercase tracking-wider inline-block">Tipe Kost</span>
+                                <h4 id="bookingKostTitle" class="font-extrabold text-slate-900 text-base leading-snug">Nama Kost</h4>
+                                <p id="bookingKostLoc" class="text-xs text-slate-400 font-bold flex items-center gap-1">Lokasi Kost</p>
+                            </div>
+                        </div>
+
+                        <!-- Rincian Biaya Sewa Bulanan -->
+                        <div class="border-t border-slate-100 pt-4 space-y-3 text-xs font-semibold">
+                            <div class="flex justify-between items-center text-slate-500">
+                                <span>Biaya Sewa Bulanan</span>
+                                <span id="bookingKostPriceText">Rp 0 / bln</span>
+                            </div>
+                            <div class="flex justify-between items-center text-slate-500">
+                                <span>Deposit / Jaminan</span>
+                                <span class="text-slate-400 font-bold">Tanpa Deposit</span>
+                            </div>
+                            <div class="border-t border-slate-100 pt-3 flex justify-between items-end text-slate-900">
+                                <span class="font-bold text-slate-400 uppercase tracking-widest text-[10px]">Total Pembayaran</span>
+                                <span id="bookingKostPriceTotal" class="text-lg font-black text-brand-600">Rp 0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Detail Kost -->
+    <div id="detailModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-premium border border-slate-100 transform transition-all scale-95 opacity-0 duration-300" id="modalContent">
+            <!-- Modal Header Foto -->
+            <div class="relative h-64 sm:h-80 w-full overflow-hidden bg-slate-100 shrink-0">
+                <button onclick="closeDetailModal()" class="absolute top-4 right-4 z-10 bg-white/90 backdrop-blur p-2 rounded-full shadow-md text-slate-700 hover:text-rose-500 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+                <img id="modalImg" src="" class="w-full h-full object-cover">
+            </div>
+            <!-- Modal Body -->
+            <div class="p-6 space-y-6">
+                <div class="flex flex-wrap items-center justify-between gap-4">
+                    <span id="modalType" class="text-xs font-extrabold bg-brand-50 text-brand-700 px-3.5 py-1.5 rounded-lg border border-brand-100 uppercase tracking-wider">Tipe</span>
+                    <div class="flex items-center gap-1.5 bg-slate-50 px-3 py-1.5 rounded-xl">
+                        <svg class="w-4 h-4 text-amber-400 font-bold" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                        <span id="modalRating" class="text-xs font-bold text-slate-800">4.8</span>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 id="modalTitle" class="text-xl sm:text-2xl font-extrabold text-slate-900 leading-tight">Nama Kost</h3>
+                    <p id="modalLoc" class="text-sm font-bold text-brand-600 mt-1 flex items-center gap-1">Lokasi</p>
+                </div>
+
+                <div class="border-t border-b border-slate-100 py-5 space-y-4">
+                    <h4 class="text-sm font-extrabold text-slate-900 uppercase tracking-widest">Fasilitas Kost</h4>
+                    <div id="modalFacilities" class="flex flex-wrap gap-2">
+                        <!-- Fasilitas ter-render otomatis -->
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-sm font-extrabold text-slate-900 uppercase tracking-widest mb-2.5">Deskripsi Lengkap</h4>
+                    <p id="modalDesc" class="text-slate-500 text-sm leading-relaxed font-medium">Lorem ipsum dolor sit amet...</p>
+                </div>
+
+                <!-- Footer Pembayaran -->
+                <div class="border-t border-slate-100 pt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <span class="text-slate-400 text-xs font-bold uppercase tracking-wider block mb-0.5">Biaya Sewa Bulanan</span>
+                        <div class="text-slate-900 font-black text-2xl" id="modalPrice">Rp 3.500.000</div>
+                    </div>
+                    <div class="flex gap-3">
+                        <a id="modalWaBtn" href="#" target="_blank" class="bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-sm px-6 py-3.5 rounded-2xl active:scale-95 transition-all shadow-md flex items-center gap-2">
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.665.989 3.3.15 5.347.151 5.494 0 9.961-4.471 9.964-9.97 0-2.664-1.04-5.163-2.929-7.051-1.888-1.889-4.39-2.929-7.042-2.93-5.499 0-9.966 4.473-9.968 9.97-.001 2.014.524 3.984 1.521 5.728l-.99 3.614 3.699-.971z"/></svg>
+                            Hubungi Admin WA
+                        </a>
+                        <button onclick="bookingInstan()" class="bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-sm px-6 py-3.5 rounded-2xl active:scale-95 transition-all shadow-md">Booking Sekarang</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Startup -->
+    <footer class="bg-slate-900 text-slate-300 pt-16 pb-8 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+                <!-- Tentang -->
+                <div class="space-y-4">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="white" class="w-4 h-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                            </svg>
+                        </div>
+                        <span class="text-lg font-bold tracking-tight text-white">KostSpace<span class="text-brand-500">.</span></span>
+                    </div>
+                    <p class="text-sm text-slate-400 leading-relaxed max-w-xs font-medium">
+                        Solusi pencarian hunian kost modern terintegrasi di Jakarta. Mudah, transparan, dan terpercaya.
+                    </p>
+                </div>
+
+                <!-- Link Perusahaan -->
+                <div>
+                    <h4 class="text-white font-extrabold mb-4 text-sm uppercase tracking-wider">Perusahaan</h4>
+                    <ul class="space-y-2 text-sm font-medium">
+                        <li><a href="javascript:void(0)" onclick="goBackToHomeAndScroll('#homepage-view')" class="hover:text-brand-400 transition-colors">Tentang Kami</a></li>
+                        <li><a href="javascript:void(0)" class="hover:text-brand-400 transition-colors">Karier</a></li>
+                        <li><a href="javascript:void(0)" onclick="goBackToHomeAndScroll('#join-mitra')" class="hover:text-brand-400 transition-colors">Mitra Kost</a></li>
+                        <li><a href="javascript:void(0)" class="hover:text-brand-400 transition-colors">Hubungi Kami</a></li>
+                    </ul>
+                </div>
+
+                <!-- Link Bantuan -->
+                <div>
+                    <h4 class="text-white font-extrabold mb-4 text-sm uppercase tracking-wider">Bantuan</h4>
+                    <ul class="space-y-2 text-sm font-medium">
+                        <li><a href="javascript:void(0)" class="hover:text-brand-400 transition-colors">Pusat Bantuan</a></li>
+                        <li><a href="javascript:void(0)" class="hover:text-brand-400 transition-colors">Panduan Sewa</a></li>
+                        <li><a href="javascript:void(0)" class="hover:text-brand-400 transition-colors">Kebijakan Batalkan</a></li>
+                        <li><a href="javascript:void(0)" class="hover:text-brand-400 transition-colors">Syarat & Ketentuan</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div>
+                    <h4 class="text-white font-extrabold mb-4 text-sm uppercase tracking-wider">Langganan Info</h4>
+                    <p class="text-sm text-slate-400 mb-4 font-medium">Dapatkan ulasan kost terbaru dan diskon bulanan menarik.</p>
+                    <div class="flex gap-2">
+                        <input type="email" placeholder="Alamat email Anda" class="bg-slate-800 border border-slate-700 text-sm rounded-xl px-4 py-2.5 w-full focus:outline-none focus:border-brand-500 text-white placeholder-slate-500">
+                        <button onclick="subscribeEmail()" class="bg-brand-500 hover:bg-brand-600 text-white font-bold text-sm px-4 rounded-xl transition-colors">Gabung</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-medium text-slate-500">
+                <span>&copy; 2026 PT KostSpace Global Indonesia. Hak Cipta Dilindungi.</span>
+                <div class="flex gap-6">
+                    <a href="javascript:void(0)" class="hover:text-white transition-colors">Kebijakan Privasi</a>
+                    <a href="javascript:void(0)" class="hover:text-white transition-colors">Ketentuan Layanan</a>
+                    <a href="javascript:void(0)" class="hover:text-white transition-colors">Peta Situs</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Logika Interaktivitas Frontend (JavaScript) -->
+    <script>
+        // Database Kost Simulasi Jakarta (Lokasi, Budget, Tipe, Fasilitas)
+        const databaseKost = [
+            {
+                id: 1,
+                title: "Kost Premium Senopati Garden",
+                location: "Jakarta Selatan",
+                price: 3500000,
+                gender: "Campur",
+                rating: 4.9,
+                image: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=800",
+                facilities: ["WiFi Cepat", "AC", "Kamar Mandi Dalam", "Parkir Mobil", "Dapur Bersama"],
+                desc: "Kost Premium modern di area eksklusif Senopati, Jakarta Selatan. Sangat cocok bagi profesional muda yang mendambakan privasi, kenyamanan, dan akses cepat ke pusat bisnis SCBD. Desain minimalis Jepang modern.",
+                pinCoords: { top: "35%", left: "45%" }
+            },
+            {
+                id: 2,
+                title: "Kuningan Smart Suites",
+                location: "Jakarta Selatan",
+                price: 2100000,
+                gender: "Putri",
+                rating: 4.7,
+                image: "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&q=80&w=800",
+                facilities: ["WiFi Cepat", "AC", "Kamar Mandi Dalam", "Dekat MRT"],
+                desc: "Kost putri nyaman berjarak hanya 5 menit jalan kaki dari kawasan perkantoran Rasuna Said Kuningan. Dilengkapi fasilitas keamanan sidik jari 24 jam dan lingkungan bersih.",
+                pinCoords: { top: "55%", left: "30%" }
+            },
+            {
+                id: 3,
+                title: "Menteng Heritage Coliving",
+                location: "Jakarta Pusat",
+                price: 4500000,
+                gender: "Campur",
+                rating: 4.8,
+                image: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&q=80&w=800",
+                facilities: ["WiFi Cepat", "AC", "Kamar Mandi Dalam", "Parkir Mobil", "Kolam Renang"],
+                desc: "Rasakan kemewahan menginap di jantung kota Jakarta Pusat. Kamar mewah bergaya arsitektur tropis modern dengan akses eksklusif ke kolam renang dan lounge santai.",
+                pinCoords: { top: "40%", left: "70%" }
+            },
+            {
+                id: 4,
+                title: "Tomang Cozy Stay Putra",
+                location: "Jakarta Barat",
+                price: 1800000,
+                gender: "Putra",
+                rating: 4.5,
+                image: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&q=80&w=800",
+                facilities: ["WiFi Cepat", "AC", "Dekat MRT"],
+                desc: "Sempurna bagi mahasiswa Universitas Trisakti maupun Tarumanagara. Lingkungan tenang, bebas banjir, dilengkapi dapur bersama serta sistem kelistrikan andal.",
+                pinCoords: { top: "60%", left: "55%" }
+            },
+            {
+                id: 5,
+                title: "Kelapa Gading Residence",
+                location: "Jakarta Utara",
+                price: 2500000,
+                gender: "Putri",
+                rating: 4.6,
+                image: "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&q=80&w=800",
+                facilities: ["WiFi Cepat", "AC", "Kamar Mandi Dalam", "Parkir Mobil"],
+                desc: "Hunian modern di kawasan Kelapa Gading. Terletak dekat dengan pusat kuliner dan pusat perbelanjaan ternama. Fasilitas pembersihan kamar mingguan gratis.",
+                pinCoords: { top: "25%", left: "50%" }
+            },
+            {
+                id: 6,
+                title: "Thamrin Executive Mansion",
+                location: "Jakarta Pusat",
+                price: 5200000,
+                gender: "Campur",
+                rating: 5.0,
+                image: "https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&q=80&w=800",
+                facilities: ["WiFi Cepat", "AC", "Kamar Mandi Dalam", "Parkir Mobil", "Gym Access", "Dekat MRT"],
+                desc: "Kost super eksklusif selangkah dari Bundaran HI. Desain penthouse mewah, ranjang ukuran King, layanan concierge, serta akses gratis ke fasilitas gym dan sauna gedung.",
+                pinCoords: { top: "45%", left: "62%" }
+            }
+        ];
+
+        // State filter aktif saat ini & Pelacak Halaman Terakhir
+        let activeCategory = null;
+        let selectedKostForBooking = null;
+        let lastVisitedView = 'homepage-view';
+
+        // Tampilkan Kost saat Halaman Pertama Dimuat
+        window.onload = function() {
+            renderListings(databaseKost, 'listingsContainer');
+        };
+
+        // Render List Kost ke DOM tertentu
+        function renderListings(items, containerId) {
+            const container = document.getElementById(containerId);
+            const noResults = document.getElementById('noResults');
+            
+            // Hapus isi kontainer
+            container.innerHTML = '';
+
+            if (items.length === 0) {
+                if (containerId === 'listingsContainer' && noResults) {
+                    noResults.classList.remove('hidden');
+                } else if (containerId === 'areaListingsContainer') {
+                    container.innerHTML = `
+                        <div class="col-span-full py-16 text-center bg-white rounded-3xl border border-slate-200 border-dashed">
+                            <h3 class="text-lg font-extrabold text-slate-900 mb-1">Belum ada kost tersedia</h3>
+                            <p class="text-slate-500 text-xs font-semibold">Coba cari di kawasan atau wilayah DKI Jakarta lainnya.</p>
+                        </div>
+                    `;
+                }
+                return;
+            }
+
+            if (containerId === 'listingsContainer' && noResults) {
+                noResults.classList.add('hidden');
+                document.getElementById('map-counter-info').innerText = `${items.length} kost ditemukan`;
+            }
+
+            items.forEach(kost => {
+                // Formatting Rupiah ringkas
+                let priceFormatted = (kost.price / 1000000).toFixed(1) + "jt";
+                if (kost.price % 1000000 === 0) {
+                    priceFormatted = (kost.price / 1000000) + "jt";
+                }
+
+                // Warna Badge Berdasarkan Gender
+                let genderBadgeColor = "bg-slate-100 text-slate-800";
+                if (kost.gender === "Putra") genderBadgeColor = "bg-blue-100 text-blue-700";
+                if (kost.gender === "Putri") genderBadgeColor = "bg-rose-100 text-rose-700";
+
+                const cardHtml = `
+                    <div class="listing-card group bg-white border border-slate-100 rounded-3xl overflow-hidden hover:shadow-soft hover:border-slate-200 transition-all duration-300 flex flex-col relative" data-price="${kost.price}">
+                        <!-- Foto Header Card -->
+                        <div class="relative pt-[65%] overflow-hidden bg-slate-50 cursor-pointer" onclick="openDetailModal(${kost.id})">
+                            <div class="absolute top-4 left-4 z-10 flex gap-2">
+                                <span class="${genderBadgeColor} text-[10px] font-extrabold px-3 py-1.5 rounded-lg tracking-wider uppercase shadow-sm">${kost.gender}</span>
+                            </div>
+                            <button class="absolute top-4 right-4 z-10 bg-white/80 backdrop-blur-md hover:bg-white p-2.5 rounded-full shadow-sm text-slate-400 hover:text-rose-500 transition-all duration-300" onclick="toggleHeart(this)">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" /></svg>
+                            </button>
+                            <img src="${kost.image}" alt="${kost.title}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out">
+                        </div>
+                        <!-- Detail Body Card -->
+                        <div class="p-5 flex-1 flex flex-col justify-between">
+                            <div class="cursor-pointer" onclick="openDetailModal(${kost.id})">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-[11px] font-extrabold text-brand-600 tracking-wider uppercase flex items-center gap-1">
+                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> ${kost.location}
+                                    </span>
+                                    <div class="flex items-center gap-1 bg-slate-50 px-2 py-1 rounded-md">
+                                        <svg class="w-3 h-3 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                                        <span class="text-[11px] font-bold text-slate-800">${kost.rating}</span>
+                                    </div>
+                                </div>
+                                <h3 class="font-extrabold text-slate-900 text-base leading-tight group-hover:text-brand-600 transition-colors line-clamp-1">${kost.title}</h3>
+                                
+                                <div class="flex flex-wrap gap-1.5 mt-3">
+                                    ${kost.facilities.slice(0, 3).map(f => `<span class="text-[10px] font-bold text-slate-500 bg-slate-50 border border-slate-100 rounded-md px-2 py-0.5">${f}</span>`).join('')}
+                                </div>
+                            </div>
+                            <div class="border-t border-slate-100 pt-4 mt-5 flex items-end justify-between">
+                                <div class="flex flex-col">
+                                    <span class="text-slate-400 text-[10px] font-extrabold uppercase tracking-wider mb-0.5">Mulai Dari</span>
+                                    <div class="text-slate-900 font-black text-lg">
+                                        Rp ${priceFormatted}<span class="text-slate-400 text-xs font-semibold">/bln</span>
+                                    </div>
+                                </div>
+                                <button onclick="navigateToBookingPage(${kost.id})" class="bg-slate-900 text-white hover:bg-brand-600 active:scale-95 text-xs font-bold px-4 py-2.5 rounded-xl transition-all shadow-sm">Book</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += cardHtml;
+            });
+        }
+
+        // NAVIGATION: Masuk Halaman Baru Wilayah Khusus
+        function navigateToArea(areaName) {
+            const homeView = document.getElementById('homepage-view');
+            const areaView = document.getElementById('area-view');
+            
+            // Catat view terakhir
+            lastVisitedView = 'area-view';
+
+            // Atur transisi beranda out
+            homeView.classList.replace('opacity-100', 'opacity-0');
+            homeView.classList.replace('translate-y-0', 'translate-y-8');
+            
+            setTimeout(() => {
+                homeView.classList.add('hidden');
+                areaView.classList.remove('hidden');
+                
+                // Set data halaman wilayah
+                document.getElementById('area-view-title').innerText = `Kost Pilihan di ${areaName}`;
+                
+                // Saring kost database khusus wilayah yang diklik
+                const filteredKost = databaseKost.filter(kost => kost.location.toLowerCase() === areaName.toLowerCase());
+                renderListings(filteredKost, 'areaListingsContainer');
+                
+                // Update pin simulasi peta wilayah
+                renderAreaMapPins(filteredKost);
+                document.getElementById('area-map-counter-info').innerText = `${filteredKost.length} kost aktif di ${areaName}`;
+
+                // Atur transisi masuk area view
+                setTimeout(() => {
+                    areaView.classList.replace('opacity-0', 'opacity-100');
+                    areaView.classList.replace('translate-y-8', 'translate-y-0');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 50);
+
+                showToast(`Menampilkan halaman katalog ${areaName}`);
+            }, 300);
+        }
+
+        // Kembali ke Beranda dari Halaman Wilayah
+        function goBackToHome() {
+            const homeView = document.getElementById('homepage-view');
+            const areaView = document.getElementById('area-view');
+            
+            // Catat view terakhir
+            lastVisitedView = 'homepage-view';
+
+            areaView.classList.replace('opacity-100', 'opacity-0');
+            areaView.classList.replace('translate-y-0', 'translate-y-8');
+            
+            setTimeout(() => {
+                areaView.classList.add('hidden');
+                homeView.classList.remove('hidden');
+                
+                setTimeout(() => {
+                    homeView.classList.replace('opacity-0', 'opacity-100');
+                    homeView.classList.replace('translate-y-8', 'translate-y-0');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 50);
+            }, 300);
+        }
+
+        // Navigasi Kembali ke Beranda dan Langsung Scroll ke Section Tertentu
+        function goBackToHomeAndScroll(selector) {
+            const areaView = document.getElementById('area-view');
+            const bookingView = document.getElementById('booking-view');
+            
+            // Sembunyikan view lainnya jika aktif
+            if (!areaView.classList.contains('hidden') || !bookingView.classList.contains('hidden')) {
+                areaView.classList.replace('opacity-100', 'opacity-0');
+                areaView.classList.replace('translate-y-0', 'translate-y-8');
+                bookingView.classList.replace('opacity-100', 'opacity-0');
+                bookingView.classList.replace('translate-y-0', 'translate-y-8');
+                
+                setTimeout(() => {
+                    areaView.classList.add('hidden');
+                    bookingView.classList.add('hidden');
+                    
+                    document.getElementById('homepage-view').classList.remove('hidden');
+                    document.getElementById('homepage-view').classList.replace('opacity-0', 'opacity-100');
+                    document.getElementById('homepage-view').classList.replace('translate-y-8', 'translate-y-0');
+                    
+                    const element = document.querySelector(selector);
+                    if (element) {
+                        element.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }, 300);
+            } else {
+                const element = document.querySelector(selector);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        }
+
+        // NAVIGATION: Buka Halaman Baru Form Booking
+        function navigateToBookingPage(kostId) {
+            const kost = databaseKost.find(item => item.id === kostId);
+            if (!kost) return;
+
+            // Tutup Modal Detail jika sedang terbuka
+            closeDetailModal();
+
+            selectedKostForBooking = kost;
+
+            const homeView = document.getElementById('homepage-view');
+            const areaView = document.getElementById('area-view');
+            const bookingView = document.getElementById('booking-view');
+
+            // Cek view aktif saat ini untuk transisi keluar yang tepat
+            let activeView = homeView;
+            if (!areaView.classList.contains('hidden')) {
+                activeView = areaView;
+                lastVisitedView = 'area-view';
+            } else {
+                lastVisitedView = 'homepage-view';
+            }
+
+            // Reset form input
+            document.getElementById('bookingForm').reset();
+
+            // Set Data kost terpilih pada bagian ringkasan pemesanan (kanan)
+            document.getElementById('bookingKostImg').src = kost.image;
+            document.getElementById('bookingKostTitle').innerText = kost.title;
+            document.getElementById('bookingKostLoc').innerText = kost.location;
+            document.getElementById('bookingKostType').innerText = `Tipe ${kost.gender}`;
+            
+            const costFormatted = "Rp " + new Intl.NumberFormat('id-ID').format(kost.price);
+            document.getElementById('bookingKostPriceText').innerText = `${costFormatted} / bln`;
+            document.getElementById('bookingKostPriceTotal').innerText = costFormatted;
+
+            // Jalankan animasi transisi keluar
+            activeView.classList.replace('opacity-100', 'opacity-0');
+            activeView.classList.replace('translate-y-0', 'translate-y-8');
+
+            setTimeout(() => {
+                activeView.classList.add('hidden');
+                bookingView.classList.remove('hidden');
+
+                // Jalankan animasi masuk
+                setTimeout(() => {
+                    bookingView.classList.replace('opacity-0', 'opacity-100');
+                    bookingView.classList.replace('translate-y-8', 'translate-y-0');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 50);
+
+                showToast(`Form pemesanan kost siap.`);
+            }, 300);
+        }
+
+        // Kembali dari Booking View ke Halaman Sebelumnya (Home / Katalog Area)
+        function goBackToPreviousView() {
+            const bookingView = document.getElementById('booking-view');
+            const targetView = document.getElementById(lastVisitedView);
+
+            bookingView.classList.replace('opacity-100', 'opacity-0');
+            bookingView.classList.replace('translate-y-0', 'translate-y-8');
+
+            setTimeout(() => {
+                bookingView.classList.add('hidden');
+                targetView.classList.remove('hidden');
+
+                setTimeout(() => {
+                    targetView.classList.replace('opacity-0', 'opacity-100');
+                    targetView.classList.replace('translate-y-8', 'translate-y-0');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 50);
+            }, 300);
+        }
+
+        // PENGIRIMAN DATA BOOKING VIA WHATSAPP API
+        function sendBookingWhatsapp(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('bookingName').value.trim();
+            const email = document.getElementById('bookingEmail').value.trim();
+            const message = document.getElementById('bookingMessage').value.trim() || 'Tidak ada catatan tambahan.';
+
+            if (!selectedKostForBooking) {
+                showToast('Terjadi kesalahan data kost.', 'error');
+                return;
+            }
+
+            const priceFormatted = "Rp " + new Intl.NumberFormat('id-ID').format(selectedKostForBooking.price);
+
+            // Rancang Struktur Template Pesan WhatsApp yang Rapi & Profesional
+            const waTemplate = `Halo Admin KostSpace, saya ingin melakukan pemesanan (booking) kamar kost dengan rincian berikut:
+
+*DETAIL PROPERTI KOST:*
+• Nama Kost: ${selectedKostForBooking.title}
+• Wilayah: ${selectedKostForBooking.location}
+• Harga Sewa: ${priceFormatted} / bln
+• Tipe: Kost ${selectedKostForBooking.gender}
+
+*DATA DIRI CALON PENYEWA:*
+• Nama Lengkap: ${name}
+• Email: ${email}
+• Catatan Khusus: ${message}
+
+Terima kasih. Mohon info ketersediaan unit dan langkah verifikasi selanjutnya.`;
+
+            // Enkripsi pesan untuk URL
+            const urlEncodedMessage = encodeURIComponent(waTemplate);
+            const waLink = `https://wa.me/628123456789?text=${urlEncodedMessage}`;
+
+            // Notifikasi sukses dan buka tab WhatsApp baru
+            showToast('Menghubungkan ke WhatsApp Admin...');
+            setTimeout(() => {
+                window.open(waLink, '_blank');
+            }, 800);
+        }
+
+        // Render Pin Peta Sesuai Kost Terpilih di Halaman Wilayah
+        function renderAreaMapPins(items) {
+            const container = document.getElementById('area-pins-container');
+            container.innerHTML = '';
+            
+            items.forEach(kost => {
+                let priceFormatted = (kost.price / 1000000).toFixed(1) + "jt";
+                if (kost.price % 1000000 === 0) {
+                    priceFormatted = (kost.price / 1000000) + "jt";
+                }
+                
+                const pinHtml = `
+                    <div class="absolute transform -translate-x-1/2 -translate-y-1/2 z-10 hover:scale-110 active:scale-95 transition-all" style="top: ${kost.pinCoords.top}; left: ${kost.pinCoords.left};">
+                        <button onclick="openDetailModal(${kost.id})" class="bg-brand-600 hover:bg-slate-900 text-white font-extrabold text-xs px-3.5 py-2 rounded-full shadow-lg border-2 border-white transition-colors">
+                            Rp ${priceFormatted}
+                        </button>
+                    </div>
+                `;
+                container.innerHTML += pinHtml;
+            });
+        }
+
+        // Jalankan Filter Data Utama
+        function applyFilters() {
+            const areaVal = document.getElementById('locationFilter').value;
+            const budgetVal = document.getElementById('budgetFilter').value;
+            const typeVal = document.getElementById('typeFilter').value;
+
+            // Jika memilih area tertentu dari search bar, buka sebagai Halaman Baru langsung!
+            if (areaVal !== 'all') {
+                navigateToArea(areaVal);
+                return;
+            }
+
+            // Nonaktifkan filter kategori jika sedang aktif
+            resetCategoryChips();
+
+            let result = databaseKost;
+
+            // Filter Anggaran
+            if (budgetVal !== 'all') {
+                if (budgetVal === 'under-2') {
+                    result = result.filter(kost => kost.price < 2000000);
+                } else if (budgetVal === '2-4') {
+                    result = result.filter(kost => kost.price >= 2000000 && kost.price <= 4000000);
+                } else if (budgetVal === 'above-4') {
+                    result = result.filter(kost => kost.price > 4000000);
+                }
+            }
+
+            // Filter Tipe Kost (Gender)
+            if (typeVal !== 'all') {
+                result = result.filter(kost => kost.gender === typeVal);
+            }
+
+            renderListings(result, 'listingsContainer');
+            showToast(`Menemukan ${result.length} hasil pencarian.`);
+        }
+
+        // Filter Cepat Kategori Chips
+        function filterCategory(facility) {
+            resetCategoryChips();
+            
+            // Temukan tombol dan jadikan aktif secara visual
+            const buttons = document.querySelectorAll('.category-chip');
+            buttons.forEach(btn => {
+                if (btn.innerText.includes(facility)) {
+                    btn.classList.add('border-brand-600', 'text-brand-600', 'bg-brand-50');
+                }
+            });
+
+            const result = databaseKost.filter(kost => kost.facilities.includes(facility));
+            renderListings(result, 'listingsContainer');
+            showToast(`Menampilkan kost dengan fasilitas: ${facility}`);
+        }
+
+        // Bersihkan visual tombol chip aktif
+        function resetCategoryChips() {
+            const buttons = document.querySelectorAll('.category-chip');
+            buttons.forEach(btn => {
+                btn.classList.remove('border-brand-600', 'text-brand-600', 'bg-brand-50');
+            });
+        }
+
+        // Toggle ikon favorit (Heart)
+        function toggleHeart(button) {
+            const svg = button.querySelector('svg');
+            if (svg.getAttribute('fill') === 'none') {
+                svg.setAttribute('fill', 'currentColor');
+                svg.classList.add('text-rose-500');
+                showToast('Ditambahkan ke daftar favorit Anda.');
+            } else {
+                svg.setAttribute('fill', 'none');
+                svg.classList.remove('text-rose-500');
+                showToast('Dihapus dari daftar favorit Anda.');
+            }
+            // Batalkan event bubbling ke card click
+            event.stopPropagation();
+        }
+
+        // Interaksi detail modal
+        function openDetailModal(id) {
+            const kost = databaseKost.find(item => item.id === id);
+            if (!kost) return;
+
+            // Catat kost aktif untuk tombol booking instan di modal
+            selectedKostForBooking = kost;
+
+            document.getElementById('modalImg').src = kost.image;
+            document.getElementById('modalType').innerText = `Tipe ${kost.gender}`;
+            document.getElementById('modalRating').innerText = kost.rating;
+            document.getElementById('modalTitle').innerText = kost.title;
+            document.getElementById('modalLoc').innerHTML = `
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                ${kost.location}
+            `;
+            document.getElementById('modalDesc').innerText = kost.desc;
+            document.getElementById('modalPrice').innerText = "Rp " + new Intl.NumberFormat('id-ID').format(kost.price) + " / bln";
+
+            // Whatsapp Link tanyakan ketersediaan
+            const waMessage = encodeURIComponent(`Halo KostSpace, saya tertarik untuk menyewa "${kost.title}" di area ${kost.location}. Apakah unit kamar ini masih tersedia?`);
+            document.getElementById('modalWaBtn').href = `https://wa.me/628123456789?text=${waMessage}`;
+
+            // Render Fasilitas Modal
+            const facilitiesBox = document.getElementById('modalFacilities');
+            facilitiesBox.innerHTML = kost.facilities.map(f => `
+                <span class="text-xs font-bold text-slate-700 bg-slate-100 rounded-xl px-4 py-2 flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-brand-500"></span> ${f}
+                </span>
+            `).join('');
+
+            // Tampilkan Modal
+            const modal = document.getElementById('detailModal');
+            const content = document.getElementById('modalContent');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                content.classList.remove('scale-95', 'opacity-0');
+            }, 10);
+        }
+
+        function closeDetailModal() {
+            const modal = document.getElementById('detailModal');
+            const content = document.getElementById('modalContent');
+            modal.classList.add('opacity-0');
+            content.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Dialihkan langsung ke Form Booking View
+        function bookingInstan() {
+            if (selectedKostForBooking) {
+                navigateToBookingPage(selectedKostForBooking.id);
+            }
+        }
+
+        // Salin Kode Promo
+        function copyPromo() {
+            const dummy = document.createElement("input");
+            document.body.appendChild(dummy);
+            dummy.value = "KOSTSPACE15";
+            dummy.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummy);
+            showToast("Kode promo berhasil disalin!");
+        }
+
+        function subscribeEmail() {
+            showToast("Terima kasih! Anda berhasil berlangganan newsletter kami.");
+        }
+
+        // Navbar Shadow Scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 30) {
+                navbar.classList.add('shadow-soft', 'bg-white/95');
+                navbar.classList.remove('bg-white/80');
+            } else {
+                navbar.classList.remove('shadow-soft', 'bg-white/95');
+                navbar.classList.add('bg-white/80');
+            }
+        });
+    </script>
+</body>
+</html>
